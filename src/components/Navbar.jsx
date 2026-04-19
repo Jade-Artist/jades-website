@@ -10,10 +10,16 @@ const navLinks = [
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const toggleRef = { current: null }
+
+  const closeMenu = () => {
+    setMenuOpen(false)
+    toggleRef.current?.focus()
+  }
 
   return (
     <nav className="navbar">
-      <a href="#" className="navbar-home" aria-label="Home">
+      <a href="#top" className="navbar-home" aria-label="Home">
         <svg
           width="24"
           height="24"
@@ -32,6 +38,7 @@ function Navbar() {
       </a>
 
       <button
+        ref={(el) => { toggleRef.current = el }}
         className="navbar-toggle"
         aria-label={menuOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={menuOpen}
@@ -43,7 +50,7 @@ function Navbar() {
       <ul className={`navbar-links${menuOpen ? ' show' : ''}`}>
         {navLinks.map(({ label, href }) => (
           <li key={href}>
-            <a href={href} onClick={() => setMenuOpen(false)}>
+            <a href={href} onClick={closeMenu}>
               {label}
             </a>
           </li>
