@@ -49,7 +49,8 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.navbar-links a:hover {
+.navbar-links a:hover,
+.navbar-links a.active {
   background: var(--accent-bg);
   color: var(--accent);
 }

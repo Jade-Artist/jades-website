@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
 const navLinks = [
-  { label: 'Poster Art', href: '#poster-art' },
-  { label: 'Illustrations', href: '#illustrations' },
-  { label: 'Comic Art', href: '#comic-art' },
-  { label: 'Traditional Drawings', href: '#traditional-drawings' },
+  { label: 'Poster Art', to: '/gallery/poster-art' },
+  { label: 'Illustrations', to: '/gallery/illustrations' },
+  { label: 'Comic Art', to: '/gallery/comic-art' },
+  { label: 'Traditional Drawings', to: '/gallery/traditional-drawings' },
 ]
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const toggleRef = { current: null }
+  const toggleRef = useRef(null)
 
   const closeMenu = () => {
     setMenuOpen(false)
@@ -19,7 +20,7 @@ function Navbar() {
 
   return (
     <nav className="navbar">
-      <a href="#top" className="navbar-home" aria-label="Home">
+      <NavLink to="/" className="navbar-home" aria-label="Home" onClick={closeMenu}>
         <svg
           width="24"
           height="24"
@@ -35,10 +36,10 @@ function Navbar() {
           <path d="M9 21V12h6v9" />
         </svg>
         <span>Home</span>
-      </a>
+      </NavLink>
 
       <button
-        ref={(el) => { toggleRef.current = el }}
+        ref={toggleRef}
         className="navbar-toggle"
         aria-label={menuOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={menuOpen}
@@ -48,11 +49,11 @@ function Navbar() {
       </button>
 
       <ul className={`navbar-links${menuOpen ? ' show' : ''}`}>
-        {navLinks.map(({ label, href }) => (
-          <li key={href}>
-            <a href={href} onClick={closeMenu}>
+        {navLinks.map(({ label, to }) => (
+          <li key={to}>
+            <NavLink to={to} onClick={closeMenu}>
               {label}
-            </a>
+            </NavLink>
           </li>
         ))}
       </ul>
